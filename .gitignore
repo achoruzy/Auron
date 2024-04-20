@@ -1,5 +1,15 @@
 .conan/
 .venv/
+Build/
+
+CMakeCache.txt
+*.cmake
+
+*.sln
+*.vcxproj
+*.filters
+
+*.pdb
 
 # Prerequisites
 *.d
