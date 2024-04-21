@@ -1,3 +1,6 @@
+# Copyright (C) Auron Project by Arkadiusz Choruzy
+# All rights reserved.
+
 from conan import ConanFile
 
 class AuronPkgs(ConanFile):

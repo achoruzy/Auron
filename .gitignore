@@ -1,6 +1,7 @@
 .conan/
 .venv/
 Build/
+.vscode/
 
 CMakeCache.txt
 *.cmake
