@@ -7,7 +7,7 @@ cmake_build:
 	cd Build && cmake --build .
 
 conan_install:
-	conan install . -sbuild_type=Debug -of=.conan/debug --build=missing
+	conan install . -sbuild_type=Debug -of=.conan --build=missing
 
 conan_profile:
 	conan profile detect

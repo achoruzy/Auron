@@ -2,7 +2,7 @@
 // All rights reserved.
 
 #include "Auron.h"
-#include <iostream>
+#include "Logger.h"
 
 
 namespace Auron {
@@ -23,7 +23,7 @@ namespace Auron {
 
     int Auron::Initialize()
     {
-        std::cout << "Test";
+        Logger::Initialize();
         return 0;
     }
 }

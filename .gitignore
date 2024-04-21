@@ -3,6 +3,7 @@
 Build/
 .vscode/
 
+log.txt
 CMakeCache.txt
 *.cmake
 
