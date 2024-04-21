@@ -10,7 +10,11 @@ namespace Auron {
     public:
         Auron();
         ~Auron();
+        static Auron& Get() { return *single_Instance; }
 
         int Initialize();
+    
+    private:
+        static Auron* single_Instance;
     };
 }

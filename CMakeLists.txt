@@ -15,3 +15,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ./Arch)
 set(CMAKE_TOOLCHAIN_FILE .conan/debug/conan_toolchain.cmake)
 
 add_executable(${PROJECT_NAME} ./Auron/Source/start.cpp)
+
+file(GLOB_RECURSE SOURCE_FILES "Auron/*.cpp")
+file(GLOB_RECURSE HEADER_FILES "Auron/*.h")
+
+target_sources(${PROJECT_NAME} PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
+target_include_directories(${PROJECT_NAME} PRIVATE Auron)
