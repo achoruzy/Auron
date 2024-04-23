@@ -11,18 +11,50 @@ namespace Auron {
     class Event
     {
     private:
-        std::vector<std::function<T>> subscribers;
+        std::vector<std::function<T>> subscribers {};
     public:
-        Event();
-        ~Event();
-        void operator+=(std::function<T> f);
-        void operator-=(std::function<T> f);
-        void Bind(std::function<T> f);
-        void Unbind(std::function<T> f);
-        void UnbindAll();
-    private:
-        void Invoke();
+        Event() {}
+
+        ~Event()
+        {
+            UnbindAll();
+        }
+
+        void operator+=(std::function<T> f)
+        {
+            Bind(f);
+        }
+
+        void operator-=(std::function<T> f)
+        {
+            Unbind(f);
+        }
+
+        void Bind(std::function<T> f)
+        {
+            subscribers.push_back(f);
+        }
+
+        void Unbind(std::function<T> f)
+        {
+            // TODO:
+        }
+
+        void UnbindAll()
+        {
+            subscribers.clear();
+        }
+    public:
+        template <typename ... TP>
+        void Invoke(TP ... args)
+        {
+            // TODO: make it async
+            for (auto f : subscribers)
+            {
+                f(args ...);
+            }
+        }
     };
 }
 
-#define EVENT(r_type, ...) ::Auron::Event(r_type(__VA_ARGS__))
+#define EVENT(r_type, ...) ::Auron::Event<r_type(__VA_ARGS__)>()

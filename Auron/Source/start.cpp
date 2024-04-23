@@ -4,6 +4,8 @@
 #pragma once
 
 #include "Core/Auron.h"
+#include "Core/Event.h"
+#include <iostream>
 
 
 int main(int argc, char** argv)
