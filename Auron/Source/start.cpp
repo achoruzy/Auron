@@ -34,6 +34,20 @@ int main(int argc, char** argv)
     std::cout << "====== \n";
     ev.Unbind(test_func, "test_func1");
     ev.Invoke(99);
+    std::cout << "====== \n";
+    std::cout << "====== \n";
+    auto ev2= new Auron::Event<int>();
+    ev2->Bind(test_func, "test_func1");
+    ev2->Bind(test_func2, "test_func2");
+    ev2->Bind(test_func, "test_func1");
+    ev2->Invoke(77);
+    std::cout << "====== \n";
+    ev2->Unbind(test_func, "test_func1");
+    ev2->Invoke(88);
+    std::cout << "====== \n";
+    ev2->Unbind(test_func, "test_func1");
+    ev2->Invoke(99);
+    delete ev2;
 
     return 0;
 }

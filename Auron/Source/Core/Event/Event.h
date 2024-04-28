@@ -59,11 +59,13 @@ namespace Auron {
                         return IsSubsEqual(sub, &unsub);
                     }
                 );
+            delete *it;
             subscribers.erase(it);
         }
 
         void UnbindAll()
         {
+            for (auto s : subscribers) { delete s; }
             subscribers.clear();
         }
 
