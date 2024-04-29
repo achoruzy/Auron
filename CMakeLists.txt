@@ -15,7 +15,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ./Arch)
 set(CONAN_TOOLCHAIN_FILE ".conan/conan_toolchain.cmake")
 include(${CONAN_TOOLCHAIN_FILE})
 
-find_package(spdlog)
+find_package(spdlog REQUIRED)
+find_package(glew REQUIRED)
+find_package(glfw3 REQUIRED)
+find_package(OpenGL REQUIRED)
 
 add_executable(${PROJECT_NAME} ./Auron/Source/start.cpp)
 
@@ -25,9 +28,12 @@ file(GLOB_RECURSE HEADER_FILES "Auron/*.h")
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE Auron)
-target_include_directories(${PROJECT_NAME} PRIVATE .conan)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_INCLUDE_PATH})
 
-target_link_libraries(${PROJECT_NAME} spdlog::spdlog)
-# find_package(spdlog REQUIRED)
-
-# target_link_libraries(${PROJECT_NAME} PRIVATE spdlog)
+target_link_directories(${PROJECT_NAME} PRIVATE ${CMAKE_LIBRARY_PATH})
+target_link_libraries(${PROJECT_NAME} 
+    spdlog::spdlog
+    # libglew32d
+    OpenGL::GL
+    glfw3
+    )
