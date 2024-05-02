@@ -12,6 +12,7 @@ int main(int argc, char** argv)
 {
     auto auron = Auron::Auron();
     auron.Initialize();
+    auron.Run();
 
     return 0;
 }

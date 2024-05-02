@@ -3,18 +3,27 @@
 
 #pragma once
 
+#include "Window.h"
+#include "Input.h"
+#include "Renderer.h"
+
 namespace Auron {
     /// @brief Base engine initialization and work class.
     class Auron
     {
+    private:
+        static Auron* single_Instance;
+        Window* m_Window;
+        Input* m_Input;
+        Renderer* m_Renderer;
+
     public:
         Auron();
         ~Auron();
         static Auron& Get() { return *single_Instance; }
 
         int Initialize();
+        void Run();
     
-    private:
-        static Auron* single_Instance;
     };
 }

@@ -23,5 +23,8 @@ namespace Auron {
     {
     public:
         virtual bool Initialize() = 0;
+        virtual void Update() = 0;
+        virtual void Terminate() = 0;
+        virtual bool ShouldClose() = 0;
     };
 }

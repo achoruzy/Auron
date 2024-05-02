@@ -5,7 +5,8 @@
 #include "Logger.h"
 #include "Window.h"
 #include "Source/Platform/Windows/WinWindow.h"
-// #include <GLFW/glfw3.h>
+#include "Source/Platform/Windows/WinInput.h"
+#include "Source/Platform/OpenGL/GLRenderer.h"
 
 namespace Auron {
 
@@ -21,6 +22,9 @@ namespace Auron {
 
     Auron::~Auron()
     {
+        delete m_Window;
+        delete m_Input;
+        delete m_Renderer;
     }
 
     int Auron::Initialize()
@@ -28,9 +32,23 @@ namespace Auron {
         Logger::Initialize();
 
         WindowSettings WinSettings;
-        auto Window = WinWindow(&WinSettings);
-        Window.Initialize();
+        m_Window = new WinWindow(&WinSettings);
+        m_Input = new WinInput();
+        m_Renderer = new GLRenderer();
+
+        m_Window->Initialize();
 
         return 0;
+    }
+
+    // Main application loop
+    void Auron::Run()
+    {
+        while (!m_Window->ShouldClose())
+        {
+            m_Window->Update();
+            m_Renderer->Update();
+            m_Input->Poll();
+        }
     }
 }

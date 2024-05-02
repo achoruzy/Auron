@@ -5,37 +5,43 @@
 #include <GLFW/glfw3.h>
 
 namespace Auron {
-    WinWindow::WinWindow(WindowSettings* settings)
+    Auron::WinWindow::WinWindow(WindowSettings* settings)
     {
-        Settings = settings;
+        m_Settings = settings;
     }
 
-    WinWindow::~WinWindow()
+    Auron::WinWindow::~WinWindow()
     {
     }
 
-    bool WinWindow::Initialize()
+    bool Auron::WinWindow::Initialize()
     {
-        GLFWwindow* Window;
-        if (!glfwInit())
-        {
-            return false;
-        }
-        Window = glfwCreateWindow(Settings->Width, Settings->Height, Settings->Title.c_str(), NULL, NULL);
+        if (!glfwInit()) { return false; }
 
-        if (!Window)
+        m_Window = glfwCreateWindow(m_Settings->Width, m_Settings->Height, m_Settings->Title.c_str(), NULL, NULL);
+
+        if (!m_Window)
         {
-            glfwTerminate();
+            Terminate();
             return false;
         }
-        glfwMakeContextCurrent(Window);
-        while(!glfwWindowShouldClose(Window))
-        {
-            glClear(GL_COLOR_BUFFER_BIT);
-            glfwSwapBuffers(Window);
-            glfwPollEvents();
-        }
-        glfwTerminate();
+
+        glfwMakeContextCurrent(m_Window);
         return true;
+    }
+
+    void Auron::WinWindow::Update()
+    {
+        glfwSwapBuffers(m_Window);
+    }
+
+    void Auron::WinWindow::Terminate()
+    {
+        glfwTerminate();
+    }
+
+    bool Auron::WinWindow::ShouldClose()
+    {
+        return glfwWindowShouldClose(m_Window);
     }
 }
