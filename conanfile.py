@@ -10,7 +10,8 @@ class AuronPkgs(ConanFile):
     def requirements(self):
         self.requires("spdlog/1.13.0")
         self.requires("opengl/system")
-        self.requires("glew/2.2.0")
+        # self.requires("glew/2.2.0")
+        self.requires("glad/0.1.36")
         self.requires("glfw/3.4")
         # self.requires("glm/cci.20230113")
         # self.requires("imgui/cci.20230105+1.89.2.docking")

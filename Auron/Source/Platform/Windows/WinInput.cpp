@@ -3,6 +3,7 @@
 
 #include "WinInput.h"
 #include <GLFW/glfw3.h>
+#include "Source/Core/Logger.h"
 
 
 void Auron::WinInput::Poll()

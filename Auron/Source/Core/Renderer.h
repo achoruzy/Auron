@@ -3,13 +3,12 @@
 
 #pragma once
 
-#include <string>
-
 
 namespace Auron {
     class Renderer
     {
     public:
+        virtual void Initialize() = 0;
         virtual void Update() = 0;
     };
 }

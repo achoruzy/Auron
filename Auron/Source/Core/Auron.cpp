@@ -4,9 +4,9 @@
 #include "Auron.h"
 #include "Logger.h"
 #include "Window.h"
+#include "Source/Platform/OpenGL/GLRenderer.h"
 #include "Source/Platform/Windows/WinWindow.h"
 #include "Source/Platform/Windows/WinInput.h"
-#include "Source/Platform/OpenGL/GLRenderer.h"
 
 namespace Auron {
 
@@ -36,7 +36,13 @@ namespace Auron {
         m_Input = new WinInput();
         m_Renderer = new GLRenderer();
 
-        m_Window->Initialize();
+        if (m_Window->Initialize())
+        {
+            m_Renderer->Initialize();
+        }
+        else {
+            LOG_CRITICAL("Window couldn't be initialized.");
+        }
 
         return 0;
     }

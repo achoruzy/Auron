@@ -11,6 +11,7 @@ namespace Auron {
     {
     private:
     public:
+        virtual void Initialize() override;
         virtual void Update() override;
     };
 }
