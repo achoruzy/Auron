@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Source/Core/Window.h"
+#include "Source/Core/WindowSettings.h"
 #include <GLFW/glfw3.h>
 
 namespace Auron {
@@ -15,9 +16,14 @@ namespace Auron {
     public:
         WinWindow(WindowSettings* settings);
         ~WinWindow();
+        // window related
         virtual bool Initialize() override;
         virtual void Update() override;
         virtual void Terminate() override;
         virtual bool ShouldClose() override;
+        GLFWwindow* GetWindow();
+        // input related
+        virtual void Poll() override;
+        // callbacks
     };
 }

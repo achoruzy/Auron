@@ -6,16 +6,16 @@
 #include "Source/Core/Logger.h"
 
 namespace Auron {
-    Auron::WinWindow::WinWindow(WindowSettings* settings)
+    WinWindow::WinWindow(WindowSettings* settings)
     {
         m_Settings = settings;
     }
 
-    Auron::WinWindow::~WinWindow()
+    WinWindow::~WinWindow()
     {
     }
 
-    bool Auron::WinWindow::Initialize()
+    bool WinWindow::Initialize()
     {
         if (!glfwInit()) { return false; }
 
@@ -33,21 +33,41 @@ namespace Auron {
         }
 
         glfwMakeContextCurrent(m_Window);
+        int w, h;
+        glfwGetFramebufferSize(m_Window, &w, &h);
+        glViewport(0, 0, w, h); // TODO to change
+
+        // BINDING CALLBACKS
+        glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
+            glViewport(0, 0, width, height);
+        });
+
         return true;
     }
 
-    void Auron::WinWindow::Update()
+    void WinWindow::Update()
     {
         glfwSwapBuffers(m_Window);
+        Poll();
     }
 
-    void Auron::WinWindow::Terminate()
+    void WinWindow::Terminate()
     {
         glfwTerminate();
     }
 
-    bool Auron::WinWindow::ShouldClose()
+    bool WinWindow::ShouldClose()
     {
         return glfwWindowShouldClose(m_Window);
+    }
+
+    GLFWwindow* WinWindow::GetWindow()
+    {
+        return m_Window;
+    }
+
+    void WinWindow::Poll()
+    {
+        glfwPollEvents();
     }
 }

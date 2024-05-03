@@ -6,7 +6,6 @@
 #include "Window.h"
 #include "Source/Platform/OpenGL/GLRenderer.h"
 #include "Source/Platform/Windows/WinWindow.h"
-#include "Source/Platform/Windows/WinInput.h"
 
 namespace Auron {
 
@@ -23,7 +22,6 @@ namespace Auron {
     Auron::~Auron()
     {
         delete m_Window;
-        delete m_Input;
         delete m_Renderer;
     }
 
@@ -33,8 +31,8 @@ namespace Auron {
 
         WindowSettings WinSettings;
         m_Window = new WinWindow(&WinSettings);
-        m_Input = new WinInput();
-        m_Renderer = new GLRenderer();
+        auto window = m_Window->GetWindow();
+        m_Renderer = new GLRenderer(window);
 
         if (m_Window->Initialize())
         {
@@ -54,7 +52,6 @@ namespace Auron {
         {
             m_Window->Update();
             m_Renderer->Update();
-            m_Input->Poll();
         }
     }
 }
