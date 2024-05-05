@@ -13,10 +13,10 @@ namespace Auron {
     private:
         GLFWwindow* m_Window;
     public:
-        GLRenderer(GLFWwindow* window);
+        GLRenderer();
         ~GLRenderer();
         virtual void Initialize() override;
         virtual void Update() override;
-        virtual void UpdateViewport(int x, int y, int w, int h) override;
+        virtual void UpdateViewport(const int w, const int h) const override;
     };
 }

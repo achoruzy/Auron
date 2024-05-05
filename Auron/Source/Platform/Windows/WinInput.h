@@ -12,5 +12,8 @@ namespace Auron {
     private:
     public:
         virtual void Poll() override;
+        virtual void OnKeyCallback(const int key, const int scancode, const int action, const int mods) override;
+        virtual void OnMouseButtonCallback(const int button, const int action, const int mods) override;
+        virtual void OnCursorCallback(const double xpos, const double ypos) override;
     };
 }

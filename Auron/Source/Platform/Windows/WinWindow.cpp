@@ -4,8 +4,15 @@
 #include "WinWindow.h"
 #include <GLFW/glfw3.h>
 #include "Source/Core/Logger.h"
+#include "Source/Core/Renderer.h"
+
 
 namespace Auron {
+    void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+    {
+        glViewport(0, 0, width, height);
+    }
+
     WinWindow::WinWindow(WindowSettings* settings)
     {
         m_Settings = settings;
@@ -15,7 +22,7 @@ namespace Auron {
     {
     }
 
-    bool WinWindow::Initialize()
+    bool WinWindow::Initialize(Renderer* renderer, Input* input)
     {
         if (!glfwInit()) { return false; }
 
@@ -35,12 +42,45 @@ namespace Auron {
         glfwMakeContextCurrent(m_Window);
         int w, h;
         glfwGetFramebufferSize(m_Window, &w, &h);
-        glViewport(0, 0, w, h); // TODO to change
+        renderer->Initialize();
+        renderer->UpdateViewport(w, h);
 
-        // BINDING CALLBACKS
+        // BINDING APP CALLBACKS
+        glfwSetWindowUserPointer(m_Window, renderer);
         glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
-            glViewport(0, 0, width, height);
+            Renderer* renderer = static_cast<Renderer*>(glfwGetWindowUserPointer(window));
+            if (renderer)
+            {
+                renderer->UpdateViewport(width, height);
+            }
         });
+
+        // BINDING INPUT CALLBACKS
+        glfwSetWindowUserPointer(m_Window, input);
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+            Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
+            if (input)
+            {
+                input->OnKeyCallback(key, scancode, action, mods);
+            }
+        });
+
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos) {
+            Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
+            if (input)
+            {
+                input->OnCursorCallback(xpos, ypos);
+            }
+        });
+
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+            Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
+            if (input)
+            {
+                input->OnMouseButtonCallback(button, action, mods);
+            }
+        });
+
 
         return true;
     }
@@ -48,7 +88,6 @@ namespace Auron {
     void WinWindow::Update()
     {
         glfwSwapBuffers(m_Window);
-        Poll();
     }
 
     void WinWindow::Terminate()
@@ -64,10 +103,5 @@ namespace Auron {
     GLFWwindow* WinWindow::GetWindow()
     {
         return m_Window;
-    }
-
-    void WinWindow::Poll()
-    {
-        glfwPollEvents();
     }
 }

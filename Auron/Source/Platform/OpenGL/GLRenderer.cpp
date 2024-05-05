@@ -8,9 +8,8 @@
 #include <GLFW/glfw3.h>
 
 namespace Auron {
-    GLRenderer::GLRenderer(GLFWwindow* window)
+    GLRenderer::GLRenderer()
     {
-        m_Window = window;
     }
 
     GLRenderer::~GLRenderer()
@@ -20,7 +19,6 @@ namespace Auron {
     void GLRenderer::Initialize()
     {
         if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
-        // if (gladLoadGL() != 0)
         {
             LOG_CRITICAL("OpenGL context couldn't be initialized.");
         }
@@ -31,10 +29,11 @@ namespace Auron {
     void GLRenderer::Update()
     {
         glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT);
     }
     
-    void GLRenderer::UpdateViewport(int x, int y, int w, int h)
+    void GLRenderer::UpdateViewport(const int w, const int h) const
     {
-        glViewport(x, y, w, h);
+        glViewport(0, 0, w, h);
     }
 }

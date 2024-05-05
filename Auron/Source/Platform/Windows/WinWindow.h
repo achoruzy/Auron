@@ -17,13 +17,10 @@ namespace Auron {
         WinWindow(WindowSettings* settings);
         ~WinWindow();
         // window related
-        virtual bool Initialize() override;
+        virtual bool Initialize(Renderer* renderer, Input* input) override;
         virtual void Update() override;
         virtual void Terminate() override;
         virtual bool ShouldClose() override;
         GLFWwindow* GetWindow();
-        // input related
-        virtual void Poll() override;
-        // callbacks
     };
 }

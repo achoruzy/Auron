@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Source/Platform/OpenGL/GLRenderer.h"
 #include "Source/Platform/Windows/WinWindow.h"
+#include "Source/Platform/Windows/WinInput.h"
 
 namespace Auron {
 
@@ -23,6 +24,7 @@ namespace Auron {
     {
         delete m_Window;
         delete m_Renderer;
+        delete m_Input;
     }
 
     int Auron::Initialize()
@@ -30,13 +32,13 @@ namespace Auron {
         Logger::Initialize();
 
         WindowSettings WinSettings;
+        m_Renderer = new GLRenderer();
+        m_Input = new WinInput();
         m_Window = new WinWindow(&WinSettings);
-        auto window = m_Window->GetWindow();
-        m_Renderer = new GLRenderer(window);
 
-        if (m_Window->Initialize())
+        if (m_Window->Initialize(m_Renderer, m_Input))
         {
-            m_Renderer->Initialize();
+            LOG_GAME_INFO("Window initialized properly.");
         }
         else {
             LOG_CRITICAL("Window couldn't be initialized.");
@@ -50,6 +52,7 @@ namespace Auron {
     {
         while (!m_Window->ShouldClose())
         {
+            m_Input->Poll();
             m_Window->Update();
             m_Renderer->Update();
         }
