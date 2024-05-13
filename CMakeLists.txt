@@ -32,6 +32,7 @@ target_sources(${PROJECT_NAME} PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
 # Include directories
 target_include_directories(${PROJECT_NAME} PRIVATE Auron)
 target_include_directories(${PROJECT_NAME} PRIVATE "${IMGUI_INCLUDE_DIR}")
+target_include_directories(${PROJECT_NAME} PRIVATE "${IMGUI_INCLUDE_DIR}/backends")
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY INCLUDE_DIRECTORIES_SYSTEM "${IMGUI_INCLUDE_DIR}")
 
