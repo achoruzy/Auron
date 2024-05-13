@@ -7,6 +7,7 @@
 #include "Source/Platform/OpenGL/GLRenderer.h"
 #include "Source/Platform/Windows/WinWindow.h"
 #include "Source/Platform/Windows/WinInput.h"
+#include <imgui.h>
 
 namespace Auron {
 
