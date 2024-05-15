@@ -3,10 +3,12 @@
 
 #pragma once
 
-#include "Window.h"
-#include "Renderer.h"
-
 namespace Auron {
+    class Window;
+    class Input;
+    class Renderer;
+    class Editor;
+
     /// @brief Base engine initialization and work class.
     class Auron
     {
@@ -15,6 +17,7 @@ namespace Auron {
         Window* m_Window;
         Input* m_Input;
         Renderer* m_Renderer;
+        Editor* m_Editor;
 
     public:
         Auron();
