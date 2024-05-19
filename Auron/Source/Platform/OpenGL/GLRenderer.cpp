@@ -141,7 +141,7 @@ namespace Auron {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
         
-        // ============
+        // RENDERER ============
         glUseProgram(shaderProgram); // shader program may be now used - this is rendering call
         glBindVertexArray(VAO);
         // glDrawArrays(GL_TRIANGLES, 0, 3);
