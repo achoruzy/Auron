@@ -3,15 +3,14 @@
 
 #pragma once
 
-#include "Source/Core/Logger.h"
-#include "Source/Core/Shader.h"
-#include "Source/Core/Scene/SceneObject.h"
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <map>
+#include <glad/glad.h>
 
 
 namespace Auron { 
+    class SceneObject;
+    class Shader;
+
     class GLBuffers
     {
     // TODO: rework for one buffer object per shader and list of buffers separately

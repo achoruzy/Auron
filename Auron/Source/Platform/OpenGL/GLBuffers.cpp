@@ -2,6 +2,9 @@
 // All rights reserved.
 
 #include "GLBuffers.h"
+#include "Source/Core/Shader.h"
+#include "Source/Core/Scene/SceneObject.h"
+#include <GLFW/glfw3.h>
 
 namespace Auron {
     GLBuffers::GLBuffers()

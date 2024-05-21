@@ -5,9 +5,12 @@
 #include <GLFW/glfw3.h>
 #include "Source/Core/Logger.h"
 #include "Source/Core/Renderer.h"
+#include "Source/Core/WindowSettings.h"
+#include <GLFW/glfw3.h>
 
 
 namespace Auron {
+
     void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     {
         glViewport(0, 0, width, height);

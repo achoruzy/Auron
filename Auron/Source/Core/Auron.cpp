@@ -6,6 +6,7 @@
 #include "Renderer.h"
 #include "Logger.h"
 #include "Front/Editor.h"
+#include "Source/Core/WindowSettings.h"
 #include "Source/Platform/OpenGL/GLRenderer.h"
 #include "Source/Platform/Windows/WinWindow.h"
 #include "Source/Platform/Windows/WinInput.h"

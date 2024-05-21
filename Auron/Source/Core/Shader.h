@@ -4,14 +4,23 @@
 #pragma once
 
 #include <string>
+#include <map>
 
 
-namespace Auron { 
+namespace Auron {
+    enum class ShaderType
+    {
+        VERTEX,
+        FRAGMENT
+    };
+
     class Shader
     {
+    protected:
+        std::map<ShaderType, unsigned int> shaders;
     public:
-        void LoadFromFile();
-        void LoadFromString();
+        void LoadFromFile(std::string& shaderPath, ShaderType shaderType);
+        void LoadFromString(std::string& shaderCode, ShaderType shaderType);
         virtual void CreateProgram() = 0;
         virtual void Use() = 0;
         virtual void StopUsing() = 0;

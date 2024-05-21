@@ -4,10 +4,12 @@
 #pragma once
 
 #include "Source/Core/Window.h"
-#include "Source/Core/WindowSettings.h"
-#include <GLFW/glfw3.h>
+
+class GLFWwindow;
 
 namespace Auron {
+    class WindowSettings;
+
     class WinWindow: public Window
     {
     private:
@@ -21,6 +23,6 @@ namespace Auron {
         virtual void Update() override;
         virtual void Terminate() override;
         virtual bool ShouldClose() override;
-        GLFWwindow* GetWindow();
+        virtual GLFWwindow* GetWindow() override;
     };
 }

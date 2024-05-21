@@ -2,12 +2,13 @@
 // All rights reserved.
 
 #define GLFW_INCLUDE_NONE
+
 #include "GLRenderer.h"
+#include "GLBuffers.h"
 #include "Source/Core/Logger.h"
+#include "Source/Core/Scene/SceneObject.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "GLBuffers.h"
-#include "Source/Core/Scene/SceneObject.h"
 
 namespace Auron {
     GLRenderer::GLRenderer()
