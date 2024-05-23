@@ -5,18 +5,25 @@
 
 #include "Source/Core/Shader.h"
 #include <vector>
+#include <glm/glm.hpp>
 
 namespace Auron { 
+
+    struct Vert {
+        glm::vec3 position;
+        glm::vec3 color;
+    };
+
     class SceneObject
     {
     private:
-        std::vector<float> m_vertices;
-        std::vector<unsigned int> m_indices;
-        Shader* m_material;
+        Vert vertices[4];
+        std::vector<unsigned int> indices;
+        Shader* material;
     public:
         SceneObject();
         ~SceneObject();
-        std::vector<float>* GetVertices();
+        Vert* GetVertices();
         std::vector<unsigned int>* GetIndices();
         Shader* GetMaterial();
     };

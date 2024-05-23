@@ -13,7 +13,7 @@ class AuronPkgs(ConanFile):
         # self.requires("glew/2.2.0")
         self.requires("glad/0.1.36")
         self.requires("glfw/3.4")
-        # self.requires("glm/cci.20230113")
+        self.requires("glm/cci.20230113")
         # self.requires("imgui/cci.20230105+1.89.2.docking")
         # self.requires("assimp/5.3.1")
         # self.requires("openimageio/2.5.10.1")

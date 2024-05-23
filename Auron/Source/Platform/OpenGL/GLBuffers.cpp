@@ -23,13 +23,13 @@ namespace Auron {
         auto indices = object->GetIndices();
         SetOrGenerateBuffers(object->GetMaterial());
 
-        glBufferData(GL_ARRAY_BUFFER, vertices->size()*sizeof(float), vertices->data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size()*sizeof(int), indices->data(), GL_STATIC_DRAW);
 
         // TODO: get out settings for polygon drawing; may be GL_FILL/GL_LINE
         object->GetMaterial()->Use();
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, indices->size(), GL_UNSIGNED_INT, 0);
     }
 
     void GLBuffers::SetOrGenerateBuffers(Shader* shader)

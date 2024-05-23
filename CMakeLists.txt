@@ -19,6 +19,7 @@ include(${CONAN_TOOLCHAIN_FILE})
 find_package(spdlog REQUIRED)
 find_package(glfw3 REQUIRED)
 find_package(glad REQUIRED)
+find_package(glm REQUIRED)
 find_package(OpenGL REQUIRED)
 
 add_executable(${PROJECT_NAME} ./Auron/Source/start.cpp)
@@ -41,5 +42,6 @@ target_link_libraries(${PROJECT_NAME}
     spdlog::spdlog
     OpenGL::GL
     glfw
+    glm::glm
     glad::glad
 )

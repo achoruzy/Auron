@@ -1,9 +1,10 @@
 #version 330 core
 
+layout (location = 0) out vec4 vFragColor;
 
-out vec4 FragColor;
+in vec4 vSmoothColor;
 
 void main() 
 { 
-    FragColor = vec4(0.1f, 0.5f, 0.7f, 1.0f); 
+    vFragColor = vSmoothColor; 
 }

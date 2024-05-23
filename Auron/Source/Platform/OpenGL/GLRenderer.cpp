@@ -36,7 +36,10 @@ namespace Auron {
         glClear(GL_DEPTH_BUFFER_BIT);
 
         GLBuffers buffers = GLBuffers();
-        buffers.DrawObject(new SceneObject()); // TODO
+
+        // TEST ================================
+        SceneObject object{};
+        buffers.DrawObject(&object);
     }
     
     void GLRenderer::UpdateViewport(const int w, const int h) const

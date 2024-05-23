@@ -5,15 +5,18 @@
 #include "Source/Core/Logger.h"
 
 namespace Auron {
+    GLuint GLSLShader::operator[](const std::string &attribute)
+    {
+        return attributes[attribute];
+    }
+
+    GLuint GLSLShader::operator()(const std::string &uniform)
+    {
+        return uniforms[uniform];
+    }
+
     void GLSLShader::CreateProgram()
     {
-        std::string vertexShaderSourcePath = "Auron/Shaders/glsl/shader.vert";
-        std::string fragmentShaderSourcePath = "Auron/Shaders/glsl/shader.frag";
-
-        LoadFromFile(vertexShaderSourcePath, ShaderType::VERTEX);
-        LoadFromFile(fragmentShaderSourcePath, ShaderType::FRAGMENT);
-
-        // shader program ========
         shaderProgram = glCreateProgram();
 
         for (auto const& [type, shader] : shaders)
@@ -30,33 +33,43 @@ namespace Auron {
             LOG_ERROR("Shader program linking failed: {0}", infoLogLink);
         }
 
-        for (auto const& [type, shader] : shaders)
-        {
-            glDeleteShader(shader);
-        }
+        // for (auto const& [type, shader] : shaders)
+        // {
+        //     glDeleteShader(shader);
+        // }
     }
 
     void Auron::GLSLShader::Use()
     {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex data
-        glEnableVertexAttribArray(0);
+        // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex data
+        // glEnableVertexAttribArray(0);
+        // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex color data
+        // glEnableVertexAttribArray(1);
 
         glUseProgram(shaderProgram);
     }
 
     void GLSLShader::StopUsing()
     {
+        glUseProgram(0);
     }
 
     void GLSLShader::DeleteProgram()
     {
+        for (auto const& [type, shader] : shaders)
+        {
+            glDeleteShader(shader);
+        }
+        glDeleteProgram(shaderProgram);
     }
 
     void GLSLShader::AddAttribute(const std::string &attribute)
     {
+        attributes[attribute] = glGetAttribLocation(shaderProgram, attribute.c_str());
     }
 
     void GLSLShader::AddUniform(const std::string &uniform)
     {
+        uniforms[uniform] = glGetUniformLocation(shaderProgram, uniform.c_str());
     }
 }

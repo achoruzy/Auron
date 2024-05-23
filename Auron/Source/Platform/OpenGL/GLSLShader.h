@@ -14,13 +14,15 @@ namespace Auron {
     class GLSLShader : public Shader
     {
     private:
-        GLuint vertShader;
-        GLuint fragShader;
+        // GLuint vertShader;
+        // GLuint fragShader;
         GLuint shaderProgram;
 
         std::map<std::string, GLuint> attributes;
         std::map<std::string, GLuint> uniforms;
     public:
+        virtual GLuint operator[] (const std::string& attribute);
+        virtual GLuint operator() (const std::string& uniform);
         virtual void CreateProgram() override;
         virtual void Use() override;
         virtual void StopUsing() override;

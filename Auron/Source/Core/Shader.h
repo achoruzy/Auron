@@ -5,7 +5,7 @@
 
 #include <string>
 #include <map>
-
+#include <glad/glad.h>
 
 namespace Auron {
     enum class ShaderType
@@ -17,10 +17,12 @@ namespace Auron {
     class Shader
     {
     protected:
-        std::map<ShaderType, unsigned int> shaders;
+        std::map<ShaderType, GLuint> shaders;
     public:
         void LoadFromFile(std::string& shaderPath, ShaderType shaderType);
         void LoadFromString(std::string& shaderCode, ShaderType shaderType);
+        virtual GLuint operator[](const std::string& attribute) = 0;
+        virtual GLuint operator()(const std::string& uniform) = 0;
         virtual void CreateProgram() = 0;
         virtual void Use() = 0;
         virtual void StopUsing() = 0;
