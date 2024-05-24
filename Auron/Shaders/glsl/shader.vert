@@ -1,13 +1,13 @@
 #version 330 core
 
 layout (location = 0) in vec3 vVertex;
-layout (location = 1) in vec3 vColor;
+// layout (location = 1) in vec3 vColor;
 
 out vec4 vSmoothColor;
-uniform mat4 MVP;
+// uniform mat4 MVP;
 
 void main() 
 { 
-    vSmoothColor = vec4(vColor, 1);
+    vSmoothColor = vec4(0, 1, 1, 1);
     gl_Position = vec4(vVertex.x, vVertex.y, vVertex.z, 1.0); 
 }

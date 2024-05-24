@@ -5,6 +5,9 @@
 #include "Source/Core/Shader.h"
 #include "Source/Core/Scene/SceneObject.h"
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Auron {
     GLBuffers::GLBuffers()
@@ -26,10 +29,26 @@ namespace Auron {
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size()*sizeof(int), indices->data(), GL_STATIC_DRAW);
 
+        // =============================
+
+        glm::mat4 P = glm::ortho(-1,1,-1,1);
+        glm::mat4 MV = glm::mat4(1);
+        GLsizei stride = sizeof(Vert);
+
+        auto material = object->GetMaterial();
+
+        glEnableVertexAttribArray((*material)["vVertex"]);
+        glVertexAttribPointer((*material)["vVertex"], 3, GL_FLOAT, GL_FALSE, stride, 0);
+        // glEnableVertexAttribArray((*material)["vColor"]);
+        // glVertexAttribPointer((*material)["vColor"], 3, GL_FLOAT, GL_FALSE, stride, (const GLvoid*)offsetof(Vert, color));
+
+
         // TODO: get out settings for polygon drawing; may be GL_FILL/GL_LINE
         object->GetMaterial()->Use();
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        glDrawElements(GL_TRIANGLES, indices->size(), GL_UNSIGNED_INT, 0);
+            // glUniformMatrix4fv((*material)("MVP"), 1, GL_FALSE, glm::value_ptr(P*MV));
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+        object->GetMaterial()->StopUsing();
     }
 
     void GLBuffers::SetOrGenerateBuffers(Shader* shader)
