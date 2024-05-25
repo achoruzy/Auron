@@ -10,46 +10,55 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Auron {
-    GLBuffer::GLBuffer()
+    GLBuffer::GLBuffer(SceneObject* object, Shader* shader): object{object}, shader{shader}
     {
-
+        Initialize();
     }
 
     GLBuffer::~GLBuffer()
     {
     }
 
-    void GLBuffer::DrawObject(SceneObject* object)
+    void GLBuffer::Initialize()
     {
-        // TODO rework for multi model per material
-        SetOrGenerateBuffers(object->GetMaterial());
+        SetOrGenerateBuffers();
 
+        // TODO rework for multi model per material
         auto vertices = object->GetVertices();
         auto indices = object->GetIndices();
-        auto material = object->GetMaterial();
 
         glBufferData(GL_ARRAY_BUFFER, 4*sizeof(Vert), vertices, GL_STATIC_DRAW);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size()*sizeof(int), indices->data(), GL_STATIC_DRAW);
 
         GLsizei stride = sizeof(Vert);
 
-        glEnableVertexAttribArray((*material)["vVertex"]);
-        glVertexAttribPointer((*material)["vVertex"], 3, GL_FLOAT, GL_FALSE, stride, (void*)0); // vertex data
-        glEnableVertexAttribArray((*material)["vColor"]);
-        glVertexAttribPointer((*material)["vColor"], 3, GL_FLOAT, GL_FALSE, stride, (const GLvoid*)offsetof(Vert, color));
-
+        // Base engine attributes
+        glEnableVertexAttribArray((*shader)["vVertex"]);
+        glVertexAttribPointer((*shader)["vVertex"], 3, GL_FLOAT, GL_FALSE, stride, (void*)0); // vertex data
+        glEnableVertexAttribArray((*shader)["vColor"]);
+        glVertexAttribPointer((*shader)["vColor"], 3, GL_FLOAT, GL_FALSE, stride, (const GLvoid*)offsetof(Vert, color));
+    
+        // TODO: Add functionality for adding custom uniforms
+        // TODO: Get MVP camera data out of here
         glm::mat4 P = glm::ortho(-1,1,-1,1);
         glm::mat4 MV = glm::mat4(1);
-
-        // TODO: get out settings for polygon drawing; may be GL_FILL/GL_LINE
-        object->GetMaterial()->Use();
-            glUniformMatrix4fv((*material)("MVP"), 1, GL_FALSE, glm::value_ptr(P*MV)); // needs to be in USE
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        object->GetMaterial()->StopUsing();
+        
+        // Base engine uniforms
+        shader->Use();
+            glUniformMatrix4fv((*shader)("MVP"), 1, GL_FALSE, glm::value_ptr(P*MV));
+        shader->StopUsing();
     }
 
-    void GLBuffer::SetOrGenerateBuffers(Shader* shader)
+    void GLBuffer::DrawObject(SceneObject* object)
+    {
+        // TODO: get out settings for polygon drawing; may be GL_FILL/GL_LINE
+        shader->Use();
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        shader->StopUsing();
+    }
+
+    void GLBuffer::SetOrGenerateBuffers()
     {
         GLuint* vbo = &VBOs[shader];
         if (!(*vbo)) 

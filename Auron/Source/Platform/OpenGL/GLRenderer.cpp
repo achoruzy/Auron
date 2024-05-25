@@ -35,11 +35,11 @@ namespace Auron {
         glClear(GL_COLOR_BUFFER_BIT);
         glClear(GL_DEPTH_BUFFER_BIT);
 
-        GLBuffer buffers{};
-
+        // TODO: Use Scene class (to do) here for getting scene objects
         // TEST ================================
         SceneObject object{};
-        buffers.DrawObject(&object);
+        GLBuffer buffer{&object, object.GetMaterial()};
+        buffer.DrawObject(&object);
     }
     
     void GLRenderer::UpdateViewport(const int w, const int h) const

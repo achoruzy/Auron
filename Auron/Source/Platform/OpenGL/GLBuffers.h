@@ -18,15 +18,17 @@ namespace Auron {
         std::map<Shader*, GLuint> VBOs;
         std::map<Shader*, GLuint> VAOs;
         std::map<Shader*, GLuint> EBOs;
+        SceneObject* object;
+        Shader* shader;
 
     public:
-        GLBuffer();
+        GLBuffer(SceneObject* object, Shader* shader);
         ~GLBuffer();
         void Initialize();
         void DrawObject(SceneObject* object);
         // void DrawCanvas(); // screen postprocess
     
     private:
-        void SetOrGenerateBuffers(Shader* shader);
+        void SetOrGenerateBuffers();
     };
 }
