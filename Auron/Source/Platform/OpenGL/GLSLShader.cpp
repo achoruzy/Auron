@@ -41,8 +41,8 @@ namespace Auron {
 
     void Auron::GLSLShader::Use()
     {
-        // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex data
-        // glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex data
+        glEnableVertexAttribArray(0);
         // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex color data
         // glEnableVertexAttribArray(1);
 

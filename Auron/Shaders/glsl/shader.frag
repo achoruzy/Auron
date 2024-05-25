@@ -6,5 +6,5 @@ in vec4 vSmoothColor;
 
 void main() 
 { 
-    vFragColor = vSmoothColor; 
+    vFragColor = vec4(0.1f, 0.5f, 0.7f, 1.0f);
 }

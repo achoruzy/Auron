@@ -11,19 +11,20 @@ namespace Auron {
 
     struct Vert {
         glm::vec3 position;
-        glm::vec3 color;
+        // glm::vec3 color;
     };
 
     class SceneObject
     {
     private:
-        Vert vertices[4];
+        // Vert vertices[4];
+        std::vector<float> vertices;
         std::vector<unsigned int> indices;
         Shader* material;
     public:
         SceneObject();
         ~SceneObject();
-        Vert* GetVertices();
+        std::vector<float>* GetVertices();
         std::vector<unsigned int>* GetIndices();
         Shader* GetMaterial();
     };

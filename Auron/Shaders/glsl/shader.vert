@@ -8,6 +8,6 @@ out vec4 vSmoothColor;
 
 void main() 
 { 
-    vSmoothColor = vec4(0, 1, 1, 1);
+    vSmoothColor = vec4(0.0, 1.0, 1.0, 1.0);
     gl_Position = vec4(vVertex.x, vVertex.y, vVertex.z, 1.0); 
 }
