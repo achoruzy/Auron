@@ -18,15 +18,15 @@ namespace Auron {
             -0.5f,  0.5f, 0.0f   // top left
         };
 
-        // vertices[0].position = glm::vec3{0.5f,  0.5f, 0.0f};
-        // vertices[1].position = glm::vec3{0.5f, -0.5f, 0.0f};
-        // vertices[2].position = glm::vec3{-0.5f, -0.5f, 0.0f};
-        // vertices[3].position = glm::vec3{-0.5f,  0.5f, 0.0f};
+        Svertices[0].position = glm::vec3{0.5f,  0.5f, 0.0f};
+        Svertices[1].position = glm::vec3{0.5f, -0.5f, 0.0f};
+        Svertices[2].position = glm::vec3{-0.5f, -0.5f, 0.0f};
+        Svertices[3].position = glm::vec3{-0.5f,  0.5f, 0.0f};
 
-        // vertices[0].color = glm::vec3{0.5f, 0.0f, 1.0f};
-        // vertices[1].color = glm::vec3{0.5f, 0.5f, 1.0f};
-        // vertices[2].color = glm::vec3{1.0f, 0.0f, 0.0f};
-        // vertices[3].color = glm::vec3{0.0f,  1.0f, 0.0f};
+        // Svertices[0].color = glm::vec3{0.5f, 0.0f, 1.0f};
+        // Svertices[1].color = glm::vec3{0.5f, 0.5f, 1.0f};
+        // Svertices[2].color = glm::vec3{1.0f, 0.0f, 0.0f};
+        // Svertices[3].color = glm::vec3{0.0f,  1.0f, 0.0f};
 
         indices = {
             0, 1, 3,   // first triangle
@@ -36,7 +36,7 @@ namespace Auron {
         std::string vertexShaderSourcePath = "Auron/Shaders/glsl/shader.vert";
         std::string fragmentShaderSourcePath = "Auron/Shaders/glsl/shader.frag";
 
-        GLsizei stride = sizeof(Vert);
+        // GLsizei stride = sizeof(Vert);
 
         material = new GLSLShader();
         material->LoadFromFile(vertexShaderSourcePath, ShaderType::VERTEX);

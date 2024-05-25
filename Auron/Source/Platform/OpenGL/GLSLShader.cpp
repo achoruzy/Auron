@@ -32,20 +32,10 @@ namespace Auron {
             glGetProgramInfoLog(shaderProgram, 512, NULL, infoLogLink);
             LOG_ERROR("Shader program linking failed: {0}", infoLogLink);
         }
-
-        // for (auto const& [type, shader] : shaders)
-        // {
-        //     glDeleteShader(shader);
-        // }
     }
 
-    void Auron::GLSLShader::Use()
+    void GLSLShader::Use()
     {
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex data
-        glEnableVertexAttribArray(0);
-        // glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex color data
-        // glEnableVertexAttribArray(1);
-
         glUseProgram(shaderProgram);
     }
 

@@ -17,7 +17,7 @@ namespace Auron {
     class SceneObject
     {
     private:
-        // Vert vertices[4];
+        Vert Svertices[4];
         std::vector<float> vertices;
         std::vector<unsigned int> indices;
         Shader* material;
