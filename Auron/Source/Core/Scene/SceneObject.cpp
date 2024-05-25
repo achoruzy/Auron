@@ -42,14 +42,14 @@ namespace Auron {
         material->LoadFromFile(vertexShaderSourcePath, ShaderType::VERTEX);
         material->LoadFromFile(fragmentShaderSourcePath, ShaderType::FRAGMENT);
         material->CreateProgram();
-        // material->Use();
-            // material->AddAttribute("vVertex");
-        // material->StopUsing();
+        material->Use();
+            material->AddAttribute("vVertex"); // rework to add data info with function somehow
+            material->AddUniform("MVP");
+        material->StopUsing();
         
         // glEnableVertexAttribArray((*material)["vVertex"]);
         // glVertexAttribPointer((*material)["vVertex"], 3, GL_FLOAT, GL_FALSE, stride, 0);
             // material->AddAttribute("vColor");
-            // material->AddUniform("MVP");
         // glBufferData(GL_ARRAY_BUFFER, vertices.size()*sizeof(float), vertices.data(), GL_STATIC_DRAW);
         // glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(int), indices.data(), GL_STATIC_DRAW);
     }

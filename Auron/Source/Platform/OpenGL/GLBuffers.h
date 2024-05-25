@@ -11,7 +11,7 @@ namespace Auron {
     class SceneObject;
     class Shader;
 
-    class GLBuffers
+    class GLBuffer
     {
     // TODO: rework for one buffer object per shader and list of buffers separately
     private:
@@ -20,8 +20,9 @@ namespace Auron {
         std::map<Shader*, GLuint> EBOs;
 
     public:
-        GLBuffers();
-        ~GLBuffers();
+        GLBuffer();
+        ~GLBuffer();
+        void Initialize();
         void DrawObject(SceneObject* object);
         // void DrawCanvas(); // screen postprocess
     
