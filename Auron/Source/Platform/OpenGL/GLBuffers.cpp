@@ -24,28 +24,22 @@ namespace Auron {
         // TODO rework for multi model per material
         SetOrGenerateBuffers(object->GetMaterial());
 
-
-
         auto vertices = object->GetVertices();
         auto indices = object->GetIndices();
         auto material = object->GetMaterial();
-        glBufferData(GL_ARRAY_BUFFER, vertices->size()*sizeof(float), vertices->data(), GL_STATIC_DRAW);
+
+        glBufferData(GL_ARRAY_BUFFER, 4*sizeof(Vert), vertices, GL_STATIC_DRAW);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size()*sizeof(int), indices->data(), GL_STATIC_DRAW);
 
-        glVertexAttribPointer((*material)["vVertex"], 3, GL_FLOAT, GL_FALSE, 3*sizeof(float), (void*)0); // vertex data
+        GLsizei stride = sizeof(Vert);
+
         glEnableVertexAttribArray((*material)["vVertex"]);
-        // =============================
+        glVertexAttribPointer((*material)["vVertex"], 3, GL_FLOAT, GL_FALSE, stride, (void*)0); // vertex data
+        glEnableVertexAttribArray((*material)["vColor"]);
+        glVertexAttribPointer((*material)["vColor"], 3, GL_FLOAT, GL_FALSE, stride, (const GLvoid*)offsetof(Vert, color));
 
         glm::mat4 P = glm::ortho(-1,1,-1,1);
         glm::mat4 MV = glm::mat4(1);
-        // GLsizei stride = sizeof(Vert);
-
-
-        // glEnableVertexAttribArray((*material)["vVertex"]);
-        // glVertexAttribPointer((*material)["vVertex"], 3, GL_FLOAT, GL_FALSE, stride, 0);
-        // glEnableVertexAttribArray((*material)["vColor"]);
-        // glVertexAttribPointer((*material)["vColor"], 3, GL_FLOAT, GL_FALSE, stride, (const GLvoid*)offsetof(Vert, color));
-
 
         // TODO: get out settings for polygon drawing; may be GL_FILL/GL_LINE
         object->GetMaterial()->Use();

@@ -8,6 +8,6 @@ uniform mat4 MVP;
 
 void main() 
 { 
-    vSmoothColor = vec4(0.0, 1.0, 1.0, 1.0);
+    vSmoothColor = vec4(vColor,1);
     gl_Position = MVP*vec4(vVertex,1);
 }
