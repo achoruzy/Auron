@@ -14,8 +14,6 @@ namespace Auron {
     class GLSLShader : public Shader
     {
     private:
-        // GLuint vertShader;
-        // GLuint fragShader;
         GLuint shaderProgram;
 
         std::map<std::string, GLuint> attributes;

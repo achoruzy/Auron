@@ -32,6 +32,11 @@ namespace Auron {
             glGetProgramInfoLog(shaderProgram, 512, NULL, infoLogLink);
             LOG_ERROR("Shader program linking failed: {0}", infoLogLink);
         }
+
+        for (auto const& [type, shader] : shaders)
+        {
+            glDeleteShader(shader);
+        }
     }
 
     void GLSLShader::Use()
@@ -46,20 +51,32 @@ namespace Auron {
 
     void GLSLShader::DeleteProgram()
     {
-        for (auto const& [type, shader] : shaders)
-        {
-            glDeleteShader(shader);
-        }
         glDeleteProgram(shaderProgram);
     }
 
     void GLSLShader::AddAttribute(const std::string &attribute)
     {
-        attributes[attribute] = glGetAttribLocation(shaderProgram, attribute.c_str());
+        GLuint location = glGetAttribLocation(shaderProgram, attribute.c_str());
+        if (location == -1)
+        {
+            LOG_ERROR("Shader attribute not found: {0}", attribute);
+        }
+        else
+        {
+            attributes[attribute] = location;
+        }
     }
 
     void GLSLShader::AddUniform(const std::string &uniform)
     {
-        uniforms[uniform] = glGetUniformLocation(shaderProgram, uniform.c_str());
+        GLuint location = glGetUniformLocation(shaderProgram, uniform.c_str());
+        if (location == -1)
+        {
+            LOG_ERROR("Shader uniform not found: {0}", uniform);
+        }
+        else
+        {
+            uniforms[uniform] = location;
+        }
     }
 }
