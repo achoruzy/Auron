@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "Source/Core/RenderBuffer.h"
 #include <map>
 #include <glad/glad.h>
 
@@ -11,7 +12,7 @@ namespace Auron {
     class SceneObject;
     class Shader;
 
-    class GLBuffer
+    class GLBuffer : RenderBuffer
     {
     // TODO: rework for one buffer object per shader and list of buffers separately
     private:
@@ -24,11 +25,10 @@ namespace Auron {
     public:
         GLBuffer(SceneObject* object, Shader* shader);
         ~GLBuffer();
-        void Initialize();
-        void DrawObject(SceneObject* object);
-        // void DrawCanvas(); // screen postprocess
+        virtual void DrawObject() override;
     
     private:
+        void Initialize();
         void SetOrGenerateBuffers();
     };
 }

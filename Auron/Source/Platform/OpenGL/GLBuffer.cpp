@@ -1,7 +1,7 @@
 // Copyright (C) Auron Project by Arkadiusz Choruzy
 // All rights reserved.
 
-#include "GLBuffers.h"
+#include "GLBuffer.h"
 #include "Source/Core/Shader.h"
 #include "Source/Core/Scene/SceneObject.h"
 #include <GLFW/glfw3.h>
@@ -24,8 +24,8 @@ namespace Auron {
         SetOrGenerateBuffers();
 
         // TODO rework for multi model per material
-        auto vertices = object->GetVertices();
-        auto indices = object->GetIndices();
+        Vert* vertices = object->GetVertices();
+        std::vector<unsigned int>* indices = object->GetIndices();
 
         glBufferData(GL_ARRAY_BUFFER, 4*sizeof(Vert), vertices, GL_STATIC_DRAW);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices->size()*sizeof(int), indices->data(), GL_STATIC_DRAW);
@@ -38,7 +38,6 @@ namespace Auron {
         glEnableVertexAttribArray((*shader)["vColor"]);
         glVertexAttribPointer((*shader)["vColor"], 3, GL_FLOAT, GL_FALSE, stride, (const GLvoid*)offsetof(Vert, color));
     
-        // TODO: Add functionality for adding custom uniforms
         // TODO: Get MVP camera data out of here
         glm::mat4 P = glm::ortho(-1,1,-1,1);
         glm::mat4 MV = glm::mat4(1);
@@ -51,13 +50,9 @@ namespace Auron {
         shader->StopUsing();
     }
 
-    void GLBuffer::DrawObject(SceneObject* object)
+    void GLBuffer::DrawObject()
     {
-        // TODO: get out settings for polygon drawing; may be GL_FILL/GL_LINE
-        shader->Use();
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-        shader->StopUsing();
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); //  TODO: has to be parametrical
     }
 
     void GLBuffer::SetOrGenerateBuffers()

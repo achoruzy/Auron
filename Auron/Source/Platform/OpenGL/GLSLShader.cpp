@@ -3,6 +3,7 @@
 
 #include "GLSLShader.h"
 #include "Source/Core/Logger.h"
+#include <GLFW/glfw3.h>
 
 namespace Auron {
     GLuint GLSLShader::operator[](const std::string &attribute)

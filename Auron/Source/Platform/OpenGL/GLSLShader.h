@@ -5,9 +5,8 @@
 
 #include "Source/Core/Shader.h"
 #include <string>
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
 #include <map>
+#include <glad/glad.h>
 
 
 namespace Auron { 
