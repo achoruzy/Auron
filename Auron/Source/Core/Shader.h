@@ -28,6 +28,7 @@ namespace Auron {
         virtual void Use() = 0;
         virtual void StopUsing() = 0;
         virtual void AddAttribute(const std::string& attribute) = 0;
+        virtual bool HasAttribute(const std::string& attribute) = 0;
         virtual void AddUniform(const std::string& uniform) = 0;
         virtual void SetUniformInt(const std::string& uniform, const int value) = 0;
         virtual void SetUniformFloat(const std::string& uniform, const float value) = 0;

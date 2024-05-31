@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <array>
 
 namespace Auron {
 
@@ -34,8 +35,8 @@ namespace Auron {
         material->LoadFromFile(fragmentShaderSourcePath, ShaderType::FRAGMENT);
         material->CreateProgram();
         material->Use();
-            material->AddAttribute("vVertex"); // rework to add data info with function somehow
-            material->AddAttribute("vColor");
+            material->AddAttribute("aVertex"); // rework to add data info with function somehow
+            material->AddAttribute("aColor");
             material->AddUniform("uMVP");
             material->AddUniform("uTime");
         material->StopUsing();
@@ -46,13 +47,15 @@ namespace Auron {
         delete material;
     }
 
-    Vert* SceneObject::GetVertices()
+    Vert* SceneObject::GetVertices(unsigned int& count)
     {
+        count = std::size(vertices);
         return vertices;
     }
 
-    std::vector<unsigned int>* SceneObject::GetIndices()
+    std::vector<unsigned int>* SceneObject::GetIndices(unsigned int& count)
     {
+        count = std::size(indices);
         return &indices;
     }
 

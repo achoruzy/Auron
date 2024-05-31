@@ -24,6 +24,7 @@ namespace Auron {
         virtual void Use() override;
         virtual void StopUsing() override;
         virtual void AddAttribute(const std::string& attribute) override;
+        virtual bool HasAttribute(const std::string& attribute) override;
         virtual void AddUniform(const std::string& uniform) override;
         virtual void SetUniformInt(const std::string& uniform, const int value) override;
         virtual void SetUniformFloat(const std::string& uniform, const float value) override;
@@ -32,5 +33,6 @@ namespace Auron {
         virtual void SetUniformVec4(const std::string& uniform, const glm::vec4& value) override;
         virtual void SetUniformMat4(const std::string& uniform, const glm::mat4& value) override;
         virtual void DeleteProgram() override;
+
     };
 }

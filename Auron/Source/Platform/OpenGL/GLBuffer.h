@@ -5,21 +5,28 @@
 
 #include "Source/Core/RenderBuffer.h"
 #include <map>
+#include <vector>
+#include <string>
 #include <glad/glad.h>
 
 
 namespace Auron { 
     class SceneObject;
     class Shader;
+    class Vert;
+    class GLSLShader;
 
     class GLBuffer : RenderBuffer
     {
-    // TODO: rework for one buffer object per shader and list of buffers separately
     private:
-        std::map<Shader*, GLuint> VBOs;
-        std::map<Shader*, GLuint> VAOs;
-        std::map<Shader*, GLuint> EBOs;
+        GLuint VBO;
+        GLuint VAO;
+        GLuint EBO;
         SceneObject* object;
+        Vert* vertices;
+        unsigned int vertices_count;
+        std::vector<unsigned int>* indices;
+        unsigned int indices_count;
         Shader* shader;
 
     public:
@@ -29,6 +36,8 @@ namespace Auron {
     
     private:
         void Initialize();
-        void SetOrGenerateBuffers();
+        void GenerateBuffers();
+
+        void SetAttributeEnabled(const std::string& attribute);
     };
 }

@@ -67,6 +67,11 @@ namespace Auron {
             attributes[attribute] = location;
         }
     }
+    
+    bool GLSLShader::HasAttribute(const std::string &attribute)
+    {
+        return attributes.contains(attribute);
+    }
 
     void GLSLShader::AddUniform(const std::string &uniform)
     {

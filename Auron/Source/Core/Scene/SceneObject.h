@@ -23,8 +23,8 @@ namespace Auron {
     public:
         SceneObject();
         ~SceneObject();
-        Vert* GetVertices();
-        std::vector<unsigned int>* GetIndices();
+        Vert* GetVertices(unsigned int& count);
+        std::vector<unsigned int>* GetIndices(unsigned int& count);
         Shader* GetMaterial();
     };
 }
