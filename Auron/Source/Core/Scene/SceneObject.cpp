@@ -36,7 +36,8 @@ namespace Auron {
         material->Use();
             material->AddAttribute("vVertex"); // rework to add data info with function somehow
             material->AddAttribute("vColor");
-            material->AddUniform("MVP");
+            material->AddUniform("uMVP");
+            material->AddUniform("uTime");
         material->StopUsing();
     }
     

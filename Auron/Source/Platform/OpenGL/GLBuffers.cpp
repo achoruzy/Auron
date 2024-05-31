@@ -42,11 +42,12 @@ namespace Auron {
         // TODO: Get MVP camera data out of here
         glm::mat4 P = glm::ortho(-1,1,-1,1);
         glm::mat4 MV = glm::mat4(1);
+        float time = glfwGetTime();
         
         // Base engine uniforms
         shader->Use();
-            // glUniformMatrix4fv((*shader)("MVP"), 1, GL_FALSE, glm::value_ptr(P*MV));
-            shader->SetUniformMat4("MVP", P*MV);
+            shader->SetUniformMat4("uMVP", P*MV);
+            shader->SetUniformFloat("uTime", time);
         shader->StopUsing();
     }
 
