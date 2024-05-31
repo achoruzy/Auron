@@ -79,4 +79,34 @@ namespace Auron {
             uniforms[uniform] = location;
         }
     }
+
+    void GLSLShader::SetUniformInt(const std::string &uniform, const int value)
+    {
+        glUniform1i(uniforms[uniform], value);
+    }
+
+    void GLSLShader::SetUniformFloat(const std::string &uniform, const float value)
+    {
+        glUniform1f(uniforms[uniform], value);
+    }
+
+    void GLSLShader::SetUniformVec2(const std::string &uniform, const glm::vec2 &value)
+    {
+        glUniform2fv(uniforms[uniform], 1, &value[0]);
+    }
+
+    void GLSLShader::SetUniformVec3(const std::string &uniform, const glm::vec3 &value)
+    {
+        glUniform3fv(uniforms[uniform], 1, &value[0]);
+    }  
+
+    void GLSLShader::SetUniformVec4(const std::string &uniform, const glm::vec4 &value)
+    {
+        glUniform4fv(uniforms[uniform], 1, &value[0]);
+    }
+
+    void GLSLShader::SetUniformMat4(const std::string &uniform, const glm::mat4 &value)
+    {
+        glUniformMatrix4fv(uniforms[uniform], 1, GL_FALSE, &value[0][0]);
+    }
 }

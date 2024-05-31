@@ -45,7 +45,8 @@ namespace Auron {
         
         // Base engine uniforms
         shader->Use();
-            glUniformMatrix4fv((*shader)("MVP"), 1, GL_FALSE, glm::value_ptr(P*MV));
+            // glUniformMatrix4fv((*shader)("MVP"), 1, GL_FALSE, glm::value_ptr(P*MV));
+            shader->SetUniformMat4("MVP", P*MV);
         shader->StopUsing();
     }
 

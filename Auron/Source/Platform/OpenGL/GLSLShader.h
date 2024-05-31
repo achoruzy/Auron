@@ -15,7 +15,7 @@ namespace Auron {
     {
     private:
         GLuint shaderProgram;
-
+        
         std::map<std::string, GLuint> attributes;
         std::map<std::string, GLuint> uniforms;
     public:
@@ -26,6 +26,12 @@ namespace Auron {
         virtual void StopUsing() override;
         virtual void AddAttribute(const std::string& attribute) override;
         virtual void AddUniform(const std::string& uniform) override;
+        virtual void SetUniformInt(const std::string& uniform, const int value) override;
+        virtual void SetUniformFloat(const std::string& uniform, const float value) override;
+        virtual void SetUniformVec2(const std::string& uniform, const glm::vec2& value) override;
+        virtual void SetUniformVec3(const std::string& uniform, const glm::vec3& value) override;
+        virtual void SetUniformVec4(const std::string& uniform, const glm::vec4& value) override;
+        virtual void SetUniformMat4(const std::string& uniform, const glm::mat4& value) override;
         virtual void DeleteProgram() override;
     };
 }

@@ -2,10 +2,12 @@
 .venv/
 Build/
 .vscode/
+.vs/
 
 log.txt
 CMakeCache.txt
 *.cmake
+imgui.ini
 
 *.sln
 *.vcxproj

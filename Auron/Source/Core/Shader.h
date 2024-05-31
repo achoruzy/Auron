@@ -6,6 +6,7 @@
 #include <string>
 #include <map>
 #include <glad/glad.h>
+#include <glm/glm.hpp>
 
 namespace Auron {
     enum class ShaderType
@@ -28,6 +29,12 @@ namespace Auron {
         virtual void StopUsing() = 0;
         virtual void AddAttribute(const std::string& attribute) = 0;
         virtual void AddUniform(const std::string& uniform) = 0;
+        virtual void SetUniformInt(const std::string& uniform, const int value) = 0;
+        virtual void SetUniformFloat(const std::string& uniform, const float value) = 0;
+        virtual void SetUniformVec2(const std::string& uniform, const glm::vec2& value) = 0;
+        virtual void SetUniformVec3(const std::string& uniform, const glm::vec3& value) = 0;
+        virtual void SetUniformVec4(const std::string& uniform, const glm::vec4& value) = 0;
+        virtual void SetUniformMat4(const std::string& uniform, const glm::mat4& value) = 0;
         virtual void DeleteProgram() = 0;
     };
 }
