@@ -25,7 +25,7 @@ namespace Auron {
         SceneObject* object;
         Vert* vertices;
         unsigned int vertices_count;
-        std::vector<unsigned int>* indices;
+        std::vector<unsigned int>* indices; // TODO: weird type as no struct yet made
         unsigned int indices_count;
         Shader* shader;
 

@@ -11,7 +11,7 @@ namespace Auron {
     class Scene
     {
     private:
-        std::vector<SceneObject> SceneObjects;
+        std::vector<SceneObject*> SceneObjects;
     public:
         Scene();
         ~Scene();
