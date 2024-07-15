@@ -15,5 +15,9 @@ namespace Auron {
     public:
         Scene();
         ~Scene();
+        void AddObject();
+        bool RemoveObject(int id);
+        std::vector<SceneObject*> GetObjects();
+
     };
 }
