@@ -33,6 +33,9 @@ namespace Auron {
 
     int Auron::Initialize()
     {
+        /* Here should be given parameters to setup system base classes for the compilation.
+        Below to set options of OS, renderer, etc.
+        Also loggers should be available for bespoke setup.*/
         Logger::Initialize();
 
         WindowSettings WinSettings;
