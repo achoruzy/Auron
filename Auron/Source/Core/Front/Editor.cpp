@@ -46,6 +46,7 @@ namespace Auron {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        // ImGui DEMO
         ImGui::ShowDemoWindow();
 
         ImGui::Render();
