@@ -21,16 +21,41 @@ namespace Auron {
         ImGuiIO* m_ImGuiIO;
         CommandConsole* m_CommandConsole;
 
+        // Camera
+        glm::vec2 m_cameraPosition;
+        float m_cameraRotation;
+        float m_cameraZoom;
+        glm::vec2 m_lastMousePos;
+        bool m_isRotatingCamera;
+
         // Line drawing
         struct Line {
             glm::vec2 start;
             glm::vec2 end;
             ImVec4 color;
+            bool isSelected;
         };
         std::vector<Line> m_lines;
         bool m_isDrawingLine;
         glm::vec2 m_currentLineStart;
         ImVec4 m_currentLineColor;
+        const float SNAP_DISTANCE = 5.0f;
+        const float HIGHLIGHT_DISTANCE = 5.0f;
+        int m_selectedLineIndex;
+        glm::vec2 m_hoveredPoint;
+        bool m_isPointHovered;
+        int m_hoveredLineIndex;
+        bool m_isLineHovered;
+
+        // Helper methods
+        glm::vec2 FindNearestPoint(const glm::vec2& point);
+        bool IsPointNearLine(const glm::vec2& point, const Line& line);
+        float DistanceToLine(const glm::vec2& point, const glm::vec2& lineStart, const glm::vec2& lineEnd);
+        void DrawPoint(const glm::vec2& point, const ImVec4& color, float radius = 3.0f);
+        void DrawLineHighlight(const Line& line, const ImVec4& color);
+        glm::vec2 ScreenToWorld(const glm::vec2& screenPos);
+        glm::vec2 WorldToScreen(const glm::vec2& worldPos);
+        void HandleCameraRotation();
 
     public:
         Editor();
@@ -42,5 +67,6 @@ namespace Auron {
         void HandleRightClickMenu();
         void HandleLineDrawing();
         void ClearLines();
+        void DeleteSelectedLine();
     };
 }
