@@ -18,6 +18,7 @@ class AuronPkgs(ConanFile):
         # self.requires("assimp/5.3.1")
         # self.requires("openimageio/2.5.10.1")
         # self.requires("openal-soft/1.23.1")
+        self.requires("opencascade/7.6.2")
         
     def build_requirements(self):
         self.tool_requires("cmake/[>=3.28]")
