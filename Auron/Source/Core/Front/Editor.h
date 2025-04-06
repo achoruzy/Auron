@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "CommandConsole.h"
+
 struct ImGuiContext;
 struct ImGuiIO;
 
@@ -15,6 +17,7 @@ namespace Auron {
         static Editor* single_Instance;
         ImGuiContext* m_ImGuiContext;
         ImGuiIO* m_ImGuiIO;
+        CommandConsole* m_CommandConsole;
 
     public:
         Editor();
@@ -23,5 +26,6 @@ namespace Auron {
 
         int Initialize(Window* ActiveWindow);
         void Update();
+        void HandleRightClickMenu();
     };
 }

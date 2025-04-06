@@ -72,6 +72,8 @@ namespace Auron {
             m_Window->Update();
             m_Renderer->Update();
             m_Editor->Update();
+            // m_CommandConsole->Draw();
+            // m_Window->Render();
         }
     }
 }
