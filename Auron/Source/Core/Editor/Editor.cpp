@@ -25,10 +25,6 @@ namespace Auron {
         , m_isPointHovered(false)
         , m_hoveredLineIndex(-1)
         , m_isLineHovered(false)
-        , m_cameraPosition(0.0f, 0.0f)
-        , m_cameraRotation(0.0f)
-        , m_cameraZoom(1.0f)
-        , m_isRotatingCamera(false)
     {
         if (single_Instance != nullptr)
         {
@@ -101,7 +97,6 @@ namespace Auron {
             HandleRightClickMenu();
         }
 
-        HandleCameraRotation();
         HandleLineDrawing();
         m_CommandConsole->Draw();
 
@@ -170,78 +165,6 @@ namespace Auron {
         );
     }
 
-    glm::vec2 Editor::ScreenToWorld(const glm::vec2& screenPos)
-    {
-        // Get window size
-        ImVec2 windowSize = ImGui::GetIO().DisplaySize;
-        glm::vec2 center(windowSize.x * 0.5f, windowSize.y * 0.5f);
-
-        // Translate to center
-        glm::vec2 pos = screenPos - center;
-
-        // Apply zoom
-        pos /= m_cameraZoom;
-
-        // Apply rotation
-        float cosRot = cos(-m_cameraRotation);
-        float sinRot = sin(-m_cameraRotation);
-        glm::vec2 rotatedPos(
-            pos.x * cosRot - pos.y * sinRot,
-            pos.x * sinRot + pos.y * cosRot
-        );
-
-        // Translate back and add camera position
-        return rotatedPos + m_cameraPosition;
-    }
-
-    glm::vec2 Editor::WorldToScreen(const glm::vec2& worldPos)
-    {
-        // Get window size
-        ImVec2 windowSize = ImGui::GetIO().DisplaySize;
-        glm::vec2 center(windowSize.x * 0.5f, windowSize.y * 0.5f);
-
-        // Subtract camera position
-        glm::vec2 pos = worldPos - m_cameraPosition;
-
-        // Apply rotation
-        float cosRot = cos(m_cameraRotation);
-        float sinRot = sin(m_cameraRotation);
-        glm::vec2 rotatedPos(
-            pos.x * cosRot - pos.y * sinRot,
-            pos.x * sinRot + pos.y * cosRot
-        );
-
-        // Apply zoom
-        rotatedPos *= m_cameraZoom;
-
-        // Translate to screen coordinates
-        return rotatedPos + center;
-    }
-
-    void Editor::HandleCameraRotation()
-    {
-        // Skip if mouse is over any ImGui window or item
-        if (ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow) || ImGui::IsAnyItemHovered()) {
-            return;
-        }
-
-        glm::vec2 currentMousePos = glm::vec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
-
-        if (ImGui::IsMouseDown(ImGuiMouseButton_Middle)) {
-            if (!m_isRotatingCamera) {
-                m_isRotatingCamera = true;
-                m_lastMousePos = currentMousePos;
-            } else {
-                // Calculate rotation based on mouse movement
-                glm::vec2 delta = currentMousePos - m_lastMousePos;
-                m_cameraRotation += delta.x * 0.01f; // Adjust sensitivity as needed
-                m_lastMousePos = currentMousePos;
-            }
-        } else {
-            m_isRotatingCamera = false;
-        }
-    }
-
     void Editor::HandleLineDrawing()
     {
         // Skip line drawing if mouse is over any ImGui window or item
@@ -250,7 +173,7 @@ namespace Auron {
         }
 
         ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
-        glm::vec2 mousePos = ScreenToWorld(glm::vec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y));
+        glm::vec2 mousePos = glm::vec2(ImGui::GetMousePos().x, ImGui::GetMousePos().y);
         
         // Check for line hover
         m_isLineHovered = false;
@@ -288,26 +211,21 @@ namespace Auron {
                 lineColor = ImVec4(0.0f, 1.0f, 1.0f, 1.0f); // Cyan for hovered
             }
             
-            // Convert world coordinates to screen coordinates for drawing
-            glm::vec2 screenStart = WorldToScreen(line.start);
-            glm::vec2 screenEnd = WorldToScreen(line.end);
-            
             draw_list->AddLine(
-                ImVec2(screenStart.x, screenStart.y),
-                ImVec2(screenEnd.x, screenEnd.y),
+                ImVec2(line.start.x, line.start.y),
+                ImVec2(line.end.x, line.end.y),
                 ImColor(lineColor),
                 2.0f
             );
 
             // Draw points
-            DrawPoint(screenStart, lineColor);
-            DrawPoint(screenEnd, lineColor);
+            DrawPoint(line.start, lineColor);
+            DrawPoint(line.end, lineColor);
         }
 
         // Draw hovered point
         if (m_isPointHovered) {
-            glm::vec2 screenPoint = WorldToScreen(m_hoveredPoint);
-            DrawPoint(screenPoint, ImVec4(1.0f, 0.0f, 0.0f, 1.0f), 4.0f);
+            DrawPoint(m_hoveredPoint, ImVec4(1.0f, 0.0f, 0.0f, 1.0f), 4.0f);
         }
 
         // Handle line drawing
@@ -332,12 +250,9 @@ namespace Auron {
         // Draw current line being drawn
         if (m_isDrawingLine) {
             glm::vec2 current = FindNearestPoint(mousePos);
-            glm::vec2 screenStart = WorldToScreen(m_currentLineStart);
-            glm::vec2 screenEnd = WorldToScreen(current);
-            
             draw_list->AddLine(
-                ImVec2(screenStart.x, screenStart.y),
-                ImVec2(screenEnd.x, screenEnd.y),
+                ImVec2(m_currentLineStart.x, m_currentLineStart.y),
+                ImVec2(current.x, current.y),
                 ImColor(m_currentLineColor),
                 2.0f
             );
