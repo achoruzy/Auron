@@ -31,11 +31,13 @@ namespace Auron {
             single_Instance = this;
         }
         m_CommandConsole = new CommandConsole();
+        m_RightClickMenu = new RMBMenu();
     }
 
     Editor::~Editor()
     {
         delete m_CommandConsole;
+        delete m_RightClickMenu;
     }
 
     int Editor::Initialize(Window* ActiveWindow)
@@ -85,9 +87,6 @@ namespace Auron {
 
         // ImGui DEMO
         // ImGui::ShowDemoWindow();
-        
-        RMBMenu menuInstance;
-        menuInstance.RegisterMenuOption("Object1", "Option 1", []() { std::cout << "Option 1 selected!\n"; });
         
         Menu::Render();
         ToolsBar::Render();
@@ -269,22 +268,30 @@ namespace Auron {
         static bool isMenuOpen = false;
         static std::string activeObjectID;
 
-        if (ImGui::IsMouseClicked(ImGuiMouseButton_Right))
-        {
+        // Check if right click is anywhere
+        if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
             isMenuOpen = true;
-            activeObjectID = "Object1";
+            activeObjectID = "ContextMenu";
+
+            // Create and show the context menu
+            if (ImGui::BeginPopupContextWindow("ContextMenu")) {
+                if (ImGui::MenuItem("Option 1")) {
+                    std::cout << "Option 1 selected!\n";
+                }
+                if (ImGui::MenuItem("Option 2")) {
+                    std::cout << "Option 2 selected!\n";
+                }
+                if (ImGui::MenuItem("Option 3")) {
+                    std::cout << "Option 3 selected!\n";
+                }
+                ImGui::EndPopup();
+            }
+            ImGui::OpenPopup("ContextMenu");
         }
 
-        if (isMenuOpen)
-        {
-            RMBMenu menuInstance;
-            menuInstance.RegisterMenuOption("Object1", "Option 1", []() { std::cout << "Option 1 selected!\n"; });
-            menuInstance.HandleRightClick(activeObjectID);
-
-            if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-            {
-                isMenuOpen = false;
-            }
+        // Close menu if clicking elsewhere
+        if (isMenuOpen && ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !ImGui::IsWindowHovered(ImGuiHoveredFlags_AnyWindow)) {
+            isMenuOpen = false;
         }
     }
 
@@ -294,5 +301,12 @@ namespace Auron {
             m_lines.erase(m_lines.begin() + m_selectedLineIndex);
             m_selectedLineIndex = -1;
         }
+    }
+
+    glm::vec2 Editor::ScreenToWorld(const glm::vec2& screenPos)
+    {
+        // For now, we'll just return the screen position directly
+        // This can be enhanced later to handle camera transformations
+        return screenPos;
     }
 }

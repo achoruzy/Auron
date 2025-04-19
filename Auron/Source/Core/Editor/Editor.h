@@ -4,6 +4,7 @@
 #pragma once
 
 #include "CommandConsole.h"
+#include "RMBMenu.h"
 #include <vector>
 #include <glm/glm.hpp>
 
@@ -20,6 +21,7 @@ namespace Auron {
         ImGuiContext* m_ImGuiContext;
         ImGuiIO* m_ImGuiIO;
         CommandConsole* m_CommandConsole;
+        RMBMenu* m_RightClickMenu;
 
         // Line drawing
         struct Line {
@@ -58,5 +60,6 @@ namespace Auron {
         void HandleLineDrawing();
         void ClearLines();
         void DeleteSelectedLine();
+        glm::vec2 ScreenToWorld(const glm::vec2& screenPos);
     };
 }

@@ -38,11 +38,16 @@ namespace Auron {
         Also loggers should be available for bespoke setup.*/
         Logger::Initialize();
 
+        LOG_INFO("Auron Engine started.");
+        LOG_INFO("Auron Engine version: 0.1.0");
+        LOG_INFO("Auron Engine build date: " __DATE__ " " __TIME__);
+
         WindowSettings WinSettings;
         m_Renderer = new GLRenderer();
         m_Input = new WinInput();
         m_Window = new WinWindow(&WinSettings);
         m_Editor = new Editor();
+
 
         if (m_Window->Initialize(m_Renderer, m_Input))
         {
@@ -72,8 +77,6 @@ namespace Auron {
             m_Window->Update();
             m_Renderer->Update();
             m_Editor->Update();
-            // m_CommandConsole->Draw();
-            // m_Window->Render();
         }
     }
 }
