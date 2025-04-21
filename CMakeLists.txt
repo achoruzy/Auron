@@ -11,6 +11,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ./Lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ./Arch)
 
 set(IMGUI_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Auron/External/ImGui")
+set(STDIMAGE_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Auron/External/STDImage")
 
 # Include Conan toolchain
 set(CONAN_TOOLCHAIN_FILE ".conan/conan_toolchain.cmake")
@@ -34,8 +35,10 @@ target_sources(${PROJECT_NAME} PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
 target_include_directories(${PROJECT_NAME} PRIVATE Auron)
 target_include_directories(${PROJECT_NAME} PRIVATE "${IMGUI_INCLUDE_DIR}")
 target_include_directories(${PROJECT_NAME} PRIVATE "${IMGUI_INCLUDE_DIR}/backends")
+target_include_directories(${PROJECT_NAME} PRIVATE "${STDIMAGE_INCLUDE_DIR}")
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY INCLUDE_DIRECTORIES_SYSTEM "${IMGUI_INCLUDE_DIR}")
+set_property(TARGET ${PROJECT_NAME} PROPERTY INCLUDE_DIRECTORIES_SYSTEM "${STDIMAGE_INCLUDE_DIR}")
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME}

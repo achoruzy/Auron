@@ -16,10 +16,11 @@ class AuronPkgs(ConanFile):
         self.requires("glm/cci.20230113")
         # self.requires("imgui/cci.20230105+1.89.2.docking")
         # self.requires("assimp/5.4.3")
-        self.requires("openimageio/2.5.10.1")
+        # self.requires("freeimage/3.18.0")
+        # self.requires("jasper/4.2.4", override=True)
         # self.requires("boost/1.84.0", override=True)
         # self.requires("openal-soft/1.23.1")
-        self.requires("freetype/2.13.2", override=True)
+        # self.requires("freetype/2.13.2", override=True)
         self.requires("opencascade/7.6.2")
         
     def build_requirements(self):

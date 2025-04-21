@@ -8,6 +8,7 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include <GLFW/glfw3.h>
+#include "Source/Core/File/HandlerImage.h"
 
 
 namespace Auron {
@@ -16,17 +17,18 @@ namespace Auron {
 
     SplashScreen::~SplashScreen()
     {
-        // Cleanup ImGui context if needed
-        if (m_ImGuiContext) {
-            ImGui::DestroyContext(m_ImGuiContext);
-        }
-        // Cleanup other resources if needed
+        
     }
-
+    
     int SplashScreen::Run() {
+        int w = 800;
+        int h = 480;
+
+
         if (!glfwInit()) {
             return -1;
         }
+
 
         // Defining a monitor
         GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -37,7 +39,7 @@ namespace Auron {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
         glfwWindowHint(GLFW_FLOATING, GLFW_FALSE);
         glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
-        GLFWwindow* window = glfwCreateWindow(800, 480, "Splash Screen Example", nullptr, nullptr);
+        GLFWwindow* window = glfwCreateWindow(w, h, "Splash Screen Example", nullptr, nullptr);
         if (!window) {
             glfwTerminate();
             return -1;
@@ -46,10 +48,7 @@ namespace Auron {
         glfwSwapInterval(1); // Enable vsync
         
         // Putting it in the centre
-        glfwSetWindowPos(window, (mode->width - 800)/2, (mode->height - 480)/2);
-
-        // Initialize OpenGL loader (e.g., glad, glew, etc.)
-        // Make sure to include your OpenGL loader initialization here
+        glfwSetWindowPos(window, (mode->width - w)/2, (mode->height - h)/2);
 
         // Initialize ImGui
         IMGUI_CHECKVERSION();
@@ -61,6 +60,10 @@ namespace Auron {
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 130");
 
+
+        void* texture = HandlerImage::LoadTextureGL("Auron\\Assets\\splash.jpg", w, h);
+
+
         // Main loop
         while (!glfwWindowShouldClose(window)) {
             // Poll events
@@ -71,9 +74,7 @@ namespace Auron {
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            // Render splash screen or initial window
-
-            ShowSplashScreen();
+            ShowSplashScreen(texture);
 
             // Render ImGui
             ImGui::Render();
@@ -99,10 +100,11 @@ namespace Auron {
         glfwDestroyWindow(window);
         glfwTerminate();
 
+        delete texture; // Free the texture memory if needed
         return 0;
     }
 
-    void SplashScreen::ShowSplashScreen() {
+    void SplashScreen::ShowSplashScreen(void* texture) {
 
         ImGui::SetNextWindowSize(ImVec2(800, 480));
         ImGui::SetNextWindowPos(ImVec2((ImGui::GetIO().DisplaySize.x - 800) / 2,
@@ -121,7 +123,9 @@ namespace Auron {
 
         // Background image
         ImGui::SetCursorPos(ImVec2(0, 0));
-        // ImGui::Image((void*)(intptr_t)LoadTexture("Auron\\Assets\\splash.jpg"), ImVec2(800, 600));
+        
+
+        ImGui::Image(texture, ImVec2(800, 600), ImVec2(0, 0), ImVec2(1, 1), ImVec4(1, 1, 1, alpha));
 
         // Loading text with percentage
         ImGui::SetCursorPos(ImVec2(10, 480-20));
